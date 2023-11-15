@@ -2,8 +2,10 @@ import ReservationPanel from "@/components/ReservationPanel"
 
 export default function ManagePage(){
     return(
-    <body className="bg-gray-200 h-[100vh]">
+    <div className="bg-gray-200">
+
         <ReservationPanel/>
-    </body>
+
+    </div>
     )
 }

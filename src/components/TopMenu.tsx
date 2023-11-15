@@ -9,7 +9,7 @@ export default function TopMenu(){
                     justify-between items-center px-6 py-2
                     text-white font-medium text-xl fixed top-0 left-0">
         <TopMenuItem title="Home" pageRef="."/>
-        <div className="text-3xl">
+        <div className="text-3xl font-pacifico">
             EatEase
         </div>
             {session?
