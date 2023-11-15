@@ -17,8 +17,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <TopMenu/>
-      {children}
+      <body>
+        <TopMenu/>
+        {children}
+      </body>
     </html>
   )
 }
