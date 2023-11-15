@@ -8,18 +8,44 @@ import DeleteIcon from '@mui/icons-material/Delete';
 export default function ReservationPanel(){
     
     const role = 'admin'
-    // const mockdata = {
-    //     {},
-    //     {},
-    //     {},
-    //     {}
-    // }
+    const mockRestaurantReservation = [
+        {
+            bid:'001',
+            bookingDate:'05/11/2565',
+            numOfGuests:5,
+            user: "Salmon",
+            restaurant: {rid:"002",    
+            name:"Bankoku Buffet",
+            foodtype:"อาหารญี่ปุ่น",
+            address:"69 ซ.รุ่งเรือง ถ.สุทธิสารวินิจฉัย แขวงสามเสนนอก เขตห้วยขวาง กรุงเทพฯ",
+            province:"กรุงเทพฯ",
+            postalcode:"10310",
+            tel:"0854055551",
+            picture:"https://drive.google.com/uc?export=view&id=1pVyJ4U6eO_V6lPM0tx3Sov7xL4Fc8M5z"},
+            createdAt : '04/11/2565'
+        },
+        {
+            bid:'002',
+            bookingDate:'05/11/2565',
+            numOfGuests:5,
+            user:   "Salmon",
+            restaurant: {rid:"002",    
+            name:"Bankoku Buffet",
+            foodtype:"อาหารญี่ปุ่น",
+            address:"69 ซ.รุ่งเรือง ถ.สุทธิสารวินิจฉัย แขวงสามเสนนอก เขตห้วยขวาง กรุงเทพฯ",
+            province:"กรุงเทพฯ",
+            postalcode:"10310",
+            tel:"0854055551",
+            picture:"https://drive.google.com/uc?export=view&id=1pVyJ4U6eO_V6lPM0tx3Sov7xL4Fc8M5z"},
+            createdAt : '05/11/2565'
+    }
+    ]
 
     return(
         <div className="mx-[154px] mt-[200px] text-black">
 
-            <div className="flex justify-between">
-                <div className="flex text-4xl items-end ">My Reservation <div className="text-xl">(1)</div></div>
+            <div className="flex text-4xl items-end justify-between">
+                <div>My Reservation <div className="text-xl">({mockRestaurantReservation.length})</div></div>
                 <Button variant="outlined" startIcon={<DeleteIcon /> } className="text-red-700 border-red-700">Delete</Button>
             </div>
 
@@ -31,25 +57,24 @@ export default function ReservationPanel(){
                     <div className="w-1/4">Guest</div>
                 </div>
                 <hr className="w-full border-1 border-black"/>
-                <div className="bg-gray-50 rounded-xl h-32 flex flex-row gap-x-6 items-center"
-                    // key={}
-                    >
-                        <Image src='https://drive.google.com/uc?export=view&id=1R9k3jr8OAEHPSV2jMlSWSmvAOQRYFDeP'
+                {mockRestaurantReservation.map((item)=>(
+                <div className="bg-gray-50 rounded-xl h-32 flex flex-row gap-x-6 items-center" key={item.bid}>
+                        <Image src={item.restaurant.picture}
                         width={180} height={0} className="h-full rounded-bl-lg rounded-tl-lg" alt="drive image"/>
-                        <div className="flex flex-col grow gap-y-4 border">
-                            <div className="text-xl">name</div>
-                            <div className="text-gray-500">Address</div>
+                        <div className="flex flex-col grow gap-y-4">
+                            <div className="text-xl">{item.restaurant.name}</div>
+                            <div className="text-gray-500">{item.restaurant.address}</div>
                             {role=='admin'?
                                 <div className="text-gray-500">
-                                    Reserved at
+                                    Reserved at {item.createdAt}
                                 </div>:null
                                 }
                         </div>
-                        <div className="font-light">
-                            DD/MM/YYYY
+                        <div className="px-4 font-light">
+                            {item.bookingDate}
                         </div>
                         <div className="px-11 font-light">
-                            1
+                            {item.numOfGuests}
                         </div>
                         <div className="flex flex-col gap-y-3 mr-9">
                         <Link href={'./reservation?edit=true'}>
@@ -57,15 +82,8 @@ export default function ReservationPanel(){
                             </Link>
                             <Button variant="outlined" startIcon={<DeleteIcon /> } className="text-red-700 border-red-700">Delete</Button>
                         </div>
-                        {/* <div className="text-xl">{reservaitonItem.carModel}</div>
-                        <div className="text-sm">Pick-up {reservaitonItem.pickupDate} from {reservaitonItem.pickupLocation}</div>
-                        <div className="text-sm">Return {reservaitonItem.returnDate} to {reservaitonItem.returnLocation}</div>
-                        <div className="text-sm">Duration: {reservaitonItem.numOfDays}</div>
-                        <button className="block rounded-md bg-sky-600 hover:bg-indigo-600 px-3 py-2 shadow-sm text-white"
-                            onClick={()=>dispatch(removeReservation(reservaitonItem))}>
-                            Remove this Car
-                        </button> */}
                 </div>
+                ))}
             </div>
         </div>
     )
