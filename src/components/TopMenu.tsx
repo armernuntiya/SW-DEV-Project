@@ -7,7 +7,7 @@ export default function TopMenu(){
     return(
     <div className="w-full h-20 bg-red-700 flex flex-row 
                     justify-between items-center px-6 py-2
-                    text-white font-medium text-xl fixed">
+                    text-white font-medium text-xl fixed top-0 left-0">
         <TopMenuItem title="Home" pageRef="."/>
         <div className="text-3xl">
             EatEase
