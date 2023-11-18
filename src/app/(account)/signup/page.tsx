@@ -1,8 +1,15 @@
 import { TextField } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
+import {useRef} from "react";
 
 export default function SignUpPage(){
+
+    const name = useRef("")
+    const email = useRef("")
+    const tel = useRef("")
+    const pass = useRef("")
+
     return(
         <div className="bg-red-700 flex flex-col items-center py-20 h-screen">
         <div className="flex p-10 justify-center items-center gap-4 rounded-3xl bg-white shadow-md h-140 w-280">
@@ -14,13 +21,13 @@ export default function SignUpPage(){
             </div>
             <div className="flex flex-col py-4 items-center gap-12">
                 <div className="flex flex-col items-center gap-5">
-                    <TextField id="outlined-basic" placeholder="Name" variant="outlined" InputProps={{sx: {borderRadius:9999,width:399,fontSize:16, height:40,paddingBottom:2,textAlign:'center',paddingTop:2}}} InputLabelProps={{}} />
+                    <TextField id="outlined-basic" placeholder="Name" variant="outlined" InputProps={{sx: {borderRadius:9999,width:399,fontSize:16, height:40,paddingBottom:2,textAlign:'center',paddingTop:2}}} InputLabelProps={{}} onChange={(e)=>(name.current=e.target.value)}/>
 
-                    <TextField id="outlined-password-input" placeholder="Email" variant="outlined" InputProps={{sx: {borderRadius:9999,width:399,fontSize:16, height:40,paddingBottom:2,textAlign:'center',paddingTop:2}}} InputLabelProps={{}} />
+                    <TextField id="outlined-password-input" placeholder="Email" variant="outlined" InputProps={{sx: {borderRadius:9999,width:399,fontSize:16, height:40,paddingBottom:2,textAlign:'center',paddingTop:2}}} InputLabelProps={{}} onChange={(e)=>(email.current=e.target.value)}/>
 
-                    <TextField id="outlined-password-input" placeholder="Password" variant="outlined" InputProps={{sx: {borderRadius:9999,width:399,fontSize:16, height:40,paddingBottom:2,textAlign:'center',paddingTop:2}}} InputLabelProps={{}} />
+                    <TextField id="outlined-password-input" placeholder="Password" variant="outlined" InputProps={{sx: {borderRadius:9999,width:399,fontSize:16, height:40,paddingBottom:2,textAlign:'center',paddingTop:2}}} InputLabelProps={{}} onChange={(e)=>(pass.current=e.target.value)}/>
 
-                    <TextField id="outlined-password-input" placeholder="Phone Number" variant="outlined" InputProps={{sx: {borderRadius:9999,width:399,fontSize:16, height:40,paddingBottom:2,textAlign:'center',paddingTop:2}}} InputLabelProps={{}} />
+                    <TextField id="outlined-password-input" placeholder="Phone Number" variant="outlined" InputProps={{sx: {borderRadius:9999,width:399,fontSize:16, height:40,paddingBottom:2,textAlign:'center',paddingTop:2}}} InputLabelProps={{}} onChange={(e)=>(tel.current=e.target.value)}/>
                 </div>
                 <div className="flex flex-col items-center gap-2 self-stretch">
                     <button type="submit" className="flex h-9 px-6 items-center bg-red-700 text-white rounded-full font-normal font-sans text-sm hover:bg-red-800 hover:shadow-md">SIGN UP</button>
