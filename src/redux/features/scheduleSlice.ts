@@ -1,29 +1,29 @@
 import { createSlice,PayloadAction} from "@reduxjs/toolkit"
-import {  } from "../../../interfaces"
+import { ReservationItem } from "../../../interfaces"
 
-type /*CartState*/ = {
-    /*carItems*/: /*ReservationItem*/[]
+type ReservationState = {
+    bookItems: ReservationItem[]
 }
 
-const initialState:/*CartState*/ = { /*carItems*/:[]}
+const initialState:ReservationState = { bookItems:[]}
 
-export const /*cartSlice*/ = createSlice({
-    name: /*"cart"*/,
+export const ReservationSlice = createSlice({
+    name: "Reservation",
     initialState,
-    reducers:{/*
+    reducers:{
         addReservation: (state, action:PayloadAction<ReservationItem>)=>{
-            state.carItems.push(action.payload)
+            state.bookItems.push(action.payload)
         },
         removeReservation: (state, action:PayloadAction<ReservationItem>)=>{
-            const remainItem = state.carItems.filter( obj => {
-                return ( (obj.carModel !== action.payload.carModel)
-                ||(obj.pickupDate !== action.payload.pickupDate)
-                ||(obj.returnDate !== action.payload.returnDate))
+            const remainItem = state.bookItems.filter( obj => {
+                return ( (obj.restaurant !== action.payload.restaurant)
+                ||(obj.numOfGuests !== action.payload.numOfGuests)
+                ||(obj.bookingDate !== action.payload.bookingDate))
             })
-            state.carItems = remainItem
-        }*/
+            state.bookItems = remainItem
+        }
     }
 })
 
-// export const { addReservation, removeReservation} = cartSlice.actions
-// export default cartSlice.reducer
+export const { addReservation, removeReservation} = ReservationSlice.actions
+export default ReservationSlice.reducer

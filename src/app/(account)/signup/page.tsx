@@ -1,14 +1,25 @@
+"use client"
+
 import { TextField } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
+import {useRouter} from 'next/navigation';
 import {useRef} from "react";
+import userRegister from "@/libs/userRegister";
 
 export default function SignUpPage(){
+
+    const rounter = useRouter()
 
     const name = useRef("")
     const email = useRef("")
     const tel = useRef("")
     const pass = useRef("")
+
+    const submitSignup = async()=>{
+        await userRegister(name.current,email.current,tel.current,pass.current)
+        rounter.push('/signin')
+    }
 
     return(
         <div className="bg-red-700 flex flex-col items-center py-20 h-screen">
@@ -30,7 +41,7 @@ export default function SignUpPage(){
                     <TextField id="outlined-password-input" placeholder="Phone Number" variant="outlined" InputProps={{sx: {borderRadius:9999,width:399,fontSize:16, height:40,paddingBottom:2,textAlign:'center',paddingTop:2}}} InputLabelProps={{}} onChange={(e)=>(tel.current=e.target.value)}/>
                 </div>
                 <div className="flex flex-col items-center gap-2 self-stretch">
-                    <button type="submit" className="flex h-9 px-6 items-center bg-red-700 text-white rounded-full font-normal font-sans text-sm hover:bg-red-800 hover:shadow-md">SIGN UP</button>
+                    <button type="submit" className="flex h-9 px-6 items-center bg-red-700 text-white rounded-full font-normal font-sans text-sm hover:bg-red-800 hover:shadow-md" onClick={submitSignup}>SIGN UP</button>
                     <div className="flex flex-row items-center gap-1">
                         <h4 className="w-129 text-gray-700 text-center font-sans text-sm not-italic font-light leading-6">Already have an account?</h4>
                         <Link href='/signin' className="w-129 text-red-700 text-center font-sans text-sm not-italic font-light leading-6">Sign in</Link>

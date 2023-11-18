@@ -1,50 +1,57 @@
 import { Button } from "@mui/material";
 import ReservationCard from "./ReservationCard";
 import AddIcon from '@mui/icons-material/Add';
+import { getServerSession } from "next-auth";
+import { AuthOptions } from "next-auth";
+import getBooking from "@/libs/getBooking";
 
-
-export default function ReservationPanel(){
+export default async function ReservationPanel(){
     
-    const role = 'admin'
-    const mockRestaurantReservation = [
-        {
-            bid:'001',
-            bookingDate:'05/11/2565',
-            numOfGuests:5,
-            user: "Salmon",
-            restaurant: {rid:"002",    
-            name:"Bankoku Buffet",
-            foodtype:"อาหารญี่ปุ่น",
-            address:"69 ซ.รุ่งเรือง ถ.สุทธิสารวินิจฉัย แขวงสามเสนนอก เขตห้วยขวาง กรุงเทพฯ",
-            province:"กรุงเทพฯ",
-            postalcode:"10310",
-            tel:"0854055551",
-            picture:"https://drive.google.com/uc?export=view&id=1pVyJ4U6eO_V6lPM0tx3Sov7xL4Fc8M5z"},
-            createdAt : '04/11/2565'
-        },
-        {
-            bid:'002',
-            bookingDate:'05/11/2565',
-            numOfGuests:5,
-            user:   "Salmon",
-            restaurant: {rid:"002",    
-            name:"Bankoku Buffet",
-            foodtype:"อาหารญี่ปุ่น",
-            address:"69 ซ.รุ่งเรือง ถ.สุทธิสารวินิจฉัย แขวงสามเสนนอก เขตห้วยขวาง กรุงเทพฯ",
-            province:"กรุงเทพฯ",
-            postalcode:"10310",
-            tel:"0854055551",
-            picture:"https://drive.google.com/uc?export=view&id=1pVyJ4U6eO_V6lPM0tx3Sov7xL4Fc8M5z"},
-            createdAt : '05/11/2565'
-    }
-    ]
+    const session = await getServerSession(AuthOptions)
+    const bookingJson = await getBooking()
+
+    // const role = 'admin'
+    // const mockRestaurantReservation = [
+    //     {
+    //         bid:'001',
+    //         bookingDate:'05/11/2565',
+    //         numOfGuests:5,
+    //         user: "Salmon",
+    //         restaurant: {rid:"002",    
+    //         name:"Bankoku Buffet",
+    //         foodtype:"อาหารญี่ปุ่น",
+    //         address:"69 ซ.รุ่งเรือง ถ.สุทธิสารวินิจฉัย แขวงสามเสนนอก เขตห้วยขวาง กรุงเทพฯ",
+    //         province:"กรุงเทพฯ",
+    //         postalcode:"10310",
+    //         tel:"0854055551",
+    //         picture:"https://drive.google.com/uc?export=view&id=1pVyJ4U6eO_V6lPM0tx3Sov7xL4Fc8M5z"},
+    //         createdAt : '04/11/2565'
+    //     },
+    //     {
+    //         bid:'002',
+    //         bookingDate:'05/11/2565',
+    //         numOfGuests:5,
+    //         user:   "Salmon",
+    //         restaurant: {rid:"002",    
+    //         name:"Bankoku Buffet",
+    //         foodtype:"อาหารญี่ปุ่น",
+    //         address:"69 ซ.รุ่งเรือง ถ.สุทธิสารวินิจฉัย แขวงสามเสนนอก เขตห้วยขวาง กรุงเทพฯ",
+    //         province:"กรุงเทพฯ",
+    //         postalcode:"10310",
+    //         tel:"0854055551",
+    //         picture:"https://drive.google.com/uc?export=view&id=1pVyJ4U6eO_V6lPM0tx3Sov7xL4Fc8M5z"},
+    //         createdAt : '05/11/2565'
+    // }
+    // ]
 
     return(
         <div className="flex flex-row justify-center pt-[200px] text-black">
             <div className="w-[1100px]">
             <div className="flex text-4xl items-end justify-between">
                 <div className="flex text-4xl items-end font-semibold">My Reservation <div className="text-xl ml-2"> ({mockRestaurantReservation.length})</div></div>
-                <Button variant="outlined" startIcon={<AddIcon /> } className="text-red-700 border-red-700 hover:bg-red-500/25 hover:border-red-800">Create</Button>
+                <a href="/reservation/create">
+                    <Button variant="outlined" startIcon={<AddIcon /> } className="text-red-700 border-red-700 hover:bg-red-500/25 hover:border-red-800">Create</Button>
+                </a>
             </div>
 
             <div className="flex flex-col bg-white mt-7 p-5 
