@@ -26,7 +26,7 @@ export default function SignUpPage(){
                     <button type="submit" className="flex h-9 px-6 items-center bg-red-700 text-white rounded-full font-normal font-sans text-sm hover:bg-red-800 hover:shadow-md">SIGN UP</button>
                     <div className="flex flex-row items-center gap-1">
                         <h4 className="w-129 text-gray-700 text-center font-sans text-sm not-italic font-light leading-6">Already have an account?</h4>
-                        <Link href='' className="w-129 text-red-700 text-center font-sans text-sm not-italic font-light leading-6">Sign in</Link>
+                        <Link href='/signin' className="w-129 text-red-700 text-center font-sans text-sm not-italic font-light leading-6">Sign in</Link>
                     </div>
                     
                 </div>
