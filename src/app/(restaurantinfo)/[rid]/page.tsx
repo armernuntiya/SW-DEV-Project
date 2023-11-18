@@ -31,7 +31,7 @@ export default async function RestaurantDetailPage({params}:{params: {rid:string
                     <h3 className='text-gray-700 font-sans text-base not-serif font-normal'>Tel. {restaurantDetail.data.tel}</h3>
                 </div>
                 <div className='flex justify-center items-start gap-2'>
-                    <a href={`/reservations/create?id={${params.rid}}&model=${restaurantDetail.data.name}`}>
+                    <a href={`/reservation/create?id=${params.rid}&name=${restaurantDetail.data.name}`}>
                     <button className="flex h-9 px-6 items-center bg-red-700 text-white rounded-full font-medium font-sans text-sm hover:bg-red-800 hover:shadow-md">BOOK NOW</button>
                     </a>
                     {

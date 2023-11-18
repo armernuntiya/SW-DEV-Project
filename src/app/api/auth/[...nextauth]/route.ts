@@ -37,7 +37,8 @@ export const authOptions:AuthOptions = {
               }
             }
           })
-    ],pages: {
+    ]
+    ,pages: {
     signIn: '/signin', // Use your custom sign-in page
   },
     session: {strategy: "jwt"},

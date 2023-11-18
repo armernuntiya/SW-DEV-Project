@@ -1,24 +1,13 @@
-import { TextField,InputLabel,Select,MenuItem,} from "@mui/material"
-import { useSearchParams } from "next/navigation";
-import Link from "next/link"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import {getServerSession} from 'next-auth'
-import getUserProfile from "@/libs/getUserProfile";
-import { dbConnect } from "@/db/dbConnect";
-import Booking from "@/db/models/Booking";
-import {  revalidateTag } from "next/cache";
+import ReservationForm from "@/components/ReservationForm";
 
+export default async function BookingPage(){
+        
+        const session = await getServerSession(authOptions)
 
-export default function BookingPage(){
-
-        const addReservation = (addReservationForm:FormData) => {
-                const bookingDate = addReservationForm.get("bookingDate")
-                const numOfGuests = addReservationForm.get("numOfGuests")
-                const session = await getServerSession(authOptions)
-                if (!session || !session.user.token) return
-                const profile = await getUserProfile(session.user.token)
-
-        }
+        if(!session||!session.user.token) return
+        const token = session.user.token
 
         return(
                 <div className="bg-red-700 flex flex-row items-center justify-center h-screen w-screen">
@@ -28,7 +17,7 @@ export default function BookingPage(){
                                 <h4 className="w-129 text-black text-center font-sans text-base not-italic font-light leading-6">Please fill the information below</h4>
                         </div>
                         
-                        
+                <ReservationForm token={token}/>  
 
                 
                         
