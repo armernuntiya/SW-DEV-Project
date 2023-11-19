@@ -1,14 +1,22 @@
-'use client'
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import deleteRestaurant from '@/libs/deleteRestaurant';
+import {  revalidateTag } from "next/cache";
+import { redirect } from 'next/navigation';
 
-// import { MouseEventHandler } from "react"
+export default function DeleteButton({ id,token }: {id:string,token:string}){
 
-interface DeleteButtonProps {
-    deleteFunction: string;
-  }
 
-export default function DeleteButton({ deleteFunction }: DeleteButtonProps){
-    const parsedFunction = new Function(`return ${deleteFunction}`)();
+    const deleteResto = async()=>{
+        'use server'
+        console.log('delete')
+        await deleteRestaurant(id,token)
+        revalidateTag("deleteResto")
+        redirect('/')
+    }
     return (
-        <button onClick={() => parsedFunction()} className="flex h-9 px-6 items-center border-red-700 text-red-700 rounded-md font-medium font-sans text-sm border-2 hover:shadow-md hover:bg-red-100">DELETE</button>
+        <form action={deleteResto}>
+        <button type="submit" className="flex h-9 px-6 items-center border-red-700 text-red-700 rounded-md font-medium font-sans text-sm border-2 hover:shadow-md hover:bg-red-100">DELETE</button>
+        </form>
     )
 }

@@ -29,7 +29,7 @@ export default async function RestaurantCreatePage(){
                         console.log(error)
                 }
                 revalidateTag("restaurants")
-                // redirect("")
+                redirect("/")
         }
 
     return(

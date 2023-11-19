@@ -4,6 +4,7 @@ import getRestaurants from '@/libs/getRestaurants'
 
 export default async function Home() {
   const restaurants = await getRestaurants()
+ 
 
   // const mockRestaurantRepo = new Map()
   //       mockRestaurantRepo.set('6547ba1eef37aee7edf3f6fe',{name:"Bankoku Buffet",
@@ -16,6 +17,7 @@ export default async function Home() {
     
   return (
     <main className='bg-gray-200 flex flex-col gap-y-10 items-center pb-10'>
+      
       <Banner/>
       <RestaurantPanel restaurantJson={restaurants}/>
     </main>
