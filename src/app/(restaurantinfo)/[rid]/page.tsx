@@ -12,9 +12,8 @@ export default async function RestaurantDetailPage({params}:{params: {rid:string
     
     const restaurantDetail = await getRestaurant(params.rid)
     const session = await getServerSession(authOptions)
-
     const deleteResto = async()=>{
-        'use server'
+        // 'use server'
         if (!session || !session.user.token) return false
         await deleteRestaurant(params.rid,session.user.token)
         revalidateTag("deleteResto")
@@ -47,6 +46,7 @@ export default async function RestaurantDetailPage({params}:{params: {rid:string
                                 <Link href={`/restaurant/update?id=${params.rid}&name=${restaurantDetail.data.name}&foodtype=${restaurantDetail.data.foodtype}&address=${restaurantDetail.data.address}&province=${restaurantDetail.data.province}&postalcode=${restaurantDetail.data.postalcode}&tel=${restaurantDetail.data.tel}&picture=${restaurantDetail.data.picture}`}>
                                 <button className="flex h-9 px-6 items-center border-red-700 text-red-700 rounded-md font-medium font-sans text-sm border-2 hover:shadow-md hover:bg-red-100">EDIT</button>
                                 </Link>
+
                                 <form action={deleteResto}>
                                 <button type="submit" className="flex h-9 px-6 items-center border-red-700 text-red-700 rounded-md font-medium font-sans text-sm border-2 hover:shadow-md hover:bg-red-100">DELETE</button>
                                 </form>
