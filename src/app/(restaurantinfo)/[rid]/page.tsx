@@ -1,30 +1,41 @@
 import Image from 'next/image'
 import getRestaurant from '@/libs/getRestaurant'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 import getUserProfile from "@/libs/getUserProfile";
 import deleteRestaurant from '@/libs/deleteRestaurant';
 import {  revalidateTag } from "next/cache";
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
+// import { useSession } from 'next-auth/react'
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+
 
 export default async function RestaurantDetailPage({params}:{params: {rid:string}}){
     
     const restaurantDetail = await getRestaurant(params.rid)
-    const session = await getServerSession(authOptions)
+    
+    const session = getServerSession(authOptions)
+    
+    console.log("render")
+
     const deleteResto = async()=>{
         // 'use server'
-        if (!session || !session.user.token) return false
+        console.log('delete')
+        if (!session || !session.user) return false
         await deleteRestaurant(params.rid,session.user.token)
         revalidateTag("deleteResto")
         redirect('/')
     }
 
-    async function checkAdmin(session:object){
-        if (!session || !session.user.token) return false
+    async function checkAdmin(){
+        console.log('admin')
+        console.log(session.user)
+        if (!session || !session.user) return false
         const profile = await getUserProfile(session.user.token)
         return profile.data.role=='admin'
     }
+
+    
 
     return(
         <div className="bg-gray-200 flex flex-col items-center py-20 h-screen">
@@ -41,7 +52,7 @@ export default async function RestaurantDetailPage({params}:{params: {rid:string
                     <button className="flex h-9 px-6 items-center bg-red-700 text-white rounded-full font-medium font-sans text-sm hover:bg-red-800 hover:shadow-md">BOOK NOW</button>
                     </a>
                     {
-                        (await checkAdmin(session))?
+                        (await checkAdmin())?
                             <>
                                 <Link href={`/restaurant/update?id=${params.rid}&name=${restaurantDetail.data.name}&foodtype=${restaurantDetail.data.foodtype}&address=${restaurantDetail.data.address}&province=${restaurantDetail.data.province}&postalcode=${restaurantDetail.data.postalcode}&tel=${restaurantDetail.data.tel}&picture=${restaurantDetail.data.picture}`}>
                                 <button className="flex h-9 px-6 items-center border-red-700 text-red-700 rounded-md font-medium font-sans text-sm border-2 hover:shadow-md hover:bg-red-100">EDIT</button>

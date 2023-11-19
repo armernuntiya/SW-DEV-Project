@@ -76,6 +76,7 @@ export default function ReservationForm({token,action}:{token:string,action:stri
                                         <input type="number" className="px-3 bg-red-50 border rounded-full h-10 w-full text-[#737373] border-black/25" 
                                         required
                                         id="numOfGuests" name="numOfGuests"
+                                        min={1} max={8}
                                         value={formData.numOfGuests}
                                         onChange={handleInputChange}
                                         />
