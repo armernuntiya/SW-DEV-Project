@@ -28,7 +28,7 @@ export default async function RestaurantPanel({restaurantJson}:{restaurantJson:O
                 </div>
                 {
                     (await checkAdmin(session))?
-                    <Link href='/booking'>
+                    <Link href='/restaurant'>
                         <Button variant="outlined" startIcon={<AddIcon /> } className="text-red-700 border-red-700 hover:bg-red-500/25 hover:border-red-800">Create</Button>
                         </Link>
                     : null

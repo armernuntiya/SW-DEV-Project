@@ -1,9 +1,9 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import {getServerSession} from 'next-auth'
-import ReservationForm from "@/components/ReservationForm";
+import { getServerSession } from "next-auth"
+import { authOptions } from "@/app/api/auth/[...nextauth]/route"
+import ReservationForm from "@/components/ReservationForm"
 
-export default async function BookingPage(){
-        
+export default async function BookingUpdatePage(){
+
         const session = await getServerSession(authOptions)
 
         if(!session||!session.user.token) return
@@ -17,7 +17,7 @@ export default async function BookingPage(){
                                 <h4 className="w-129 text-black text-center font-sans text-base not-italic font-light leading-6">Please fill the information below</h4>
                         </div>
                         
-                <ReservationForm token={token} action="add"/>  
+                <ReservationForm token={token} action="update"/>  
 
                 
                         

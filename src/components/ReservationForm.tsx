@@ -1,20 +1,25 @@
 'use client'
 
-import { useState } from "react"
-import getRestaurants from "@/libs/getRestaurants"
+import { use, useState } from "react"
+import { useRouter } from "next/navigation"
 import { useSearchParams } from "next/navigation"
 import { InputLabel } from "@mui/material"
 import createBooking from "@/libs/createBooking"
+import updateBooking from "@/libs/updateBooking"
 
-export default function ReservationForm({token}:{token:string}){
+export default function ReservationForm({token,action}:{token:string,action:string}){
     
         const urlParams = useSearchParams()
-        const rid = urlParams.get('id')
+        const id = urlParams.get('id')
         const name = urlParams.get('name')
+        const guests = urlParams.get('guests')
+        const date = urlParams.get('reservedDate')
+        
+        const rount = useRouter()
 
         const [formData, setFormData] = useState({
-                bookingDate: '',
-                numOfGuests: 0,
+                bookingDate: date,
+                numOfGuests: guests
         });
         
 
@@ -27,14 +32,31 @@ export default function ReservationForm({token}:{token:string}){
         };
 
         const handleFormSubmit = async (event) => {
-            console.log(formData,);    
-            try {   
-                        
-                        const bookingResult = await createBooking(formData.bookingDate, Number(formData.numOfGuests), rid, token);
-                        console.log('Booking result:', bookingResult);
-                      } catch (error) {
-                        console.error('Error submitting form:', error);
-                      }
+            switch(action){
+            case 'add':{
+                try {   
+                await new Promise((resolve)=>{
+                        const bookingResult = createBooking(formData.bookingDate, Number(formData.numOfGuests), id, token);
+                        setTimeout(resolve,25)})
+                rount.push('./')
+                } catch (error) {
+                 console.error('Error submitting form:', error);
+                }
+                break;
+            }
+            case 'update':{
+                try{
+                await new Promise((resolve)=>{
+                        const bookingResult = updateBooking(formData.bookingDate, Number(formData.numOfGuests), id, token)
+                        setTimeout(resolve,25)
+                })
+                rount.push('./')
+                } catch (error) {
+                 console.error('Error submitting form:', error);
+                }
+                break;
+            }
+        }
         };
 
     return(

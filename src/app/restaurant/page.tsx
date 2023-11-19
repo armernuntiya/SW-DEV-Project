@@ -3,7 +3,7 @@ import Restaurant from "@/db/models/Restaurant";
 import {  revalidateTag } from "next/cache";
 import {redirect} from 'next/navigation'
 
-export default async function BookingSchedulesPage(){
+export default async function RestaurantCreatePage(){
 
         const addRestaurant = async (addRestaurantForm:FormData) => {
                 'use server'
@@ -31,7 +31,6 @@ export default async function BookingSchedulesPage(){
                 revalidateTag("restaurants")
                 // redirect("")
         }
-
 
     return(
         // action={addRestaurant}

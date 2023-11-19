@@ -4,6 +4,9 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 import getUserProfile from "@/libs/getUserProfile";
 import deleteRestaurant from '@/libs/deleteRestaurant';
+import {  revalidateTag } from "next/cache";
+import { redirect } from 'next/navigation';
+import Link from 'next/link';
 
 export default async function RestaurantDetailPage({params}:{params: {rid:string}}){
     
@@ -11,7 +14,11 @@ export default async function RestaurantDetailPage({params}:{params: {rid:string
     const session = await getServerSession(authOptions)
 
     const deleteResto = async()=>{
-        await deleteRestaurant(params.rid)
+        'use server'
+        if (!session || !session.user.token) return false
+        await deleteRestaurant(params.rid,session.user.token)
+        revalidateTag("deleteResto")
+        redirect('/')
     }
 
     async function checkAdmin(session:object){
@@ -37,12 +44,12 @@ export default async function RestaurantDetailPage({params}:{params: {rid:string
                     {
                         (await checkAdmin(session))?
                             <>
-                                <a href='/booking'>
+                                <Link href={`/restaurant/update?id=${params.rid}&name=${restaurantDetail.data.name}&foodtype=${restaurantDetail.data.foodtype}&address=${restaurantDetail.data.address}&province=${restaurantDetail.data.province}&postalcode=${restaurantDetail.data.postalcode}&tel=${restaurantDetail.data.tel}&picture=${restaurantDetail.data.picture}`}>
                                 <button className="flex h-9 px-6 items-center border-red-700 text-red-700 rounded-md font-medium font-sans text-sm border-2 hover:shadow-md hover:bg-red-100">EDIT</button>
-                                </a>
-                                {/* <a> */}
-                                <button onClick={deleteResto} className="flex h-9 px-6 items-center border-red-700 text-red-700 rounded-md font-medium font-sans text-sm border-2 hover:shadow-md hover:bg-red-100">DELETE</button>
-                                {/* </a> */}
+                                </Link>
+                                <form action={deleteResto}>
+                                <button type="submit" className="flex h-9 px-6 items-center border-red-700 text-red-700 rounded-md font-medium font-sans text-sm border-2 hover:shadow-md hover:bg-red-100">DELETE</button>
+                                </form>
                             </>
                         :null
                     }
