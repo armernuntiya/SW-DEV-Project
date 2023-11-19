@@ -3,15 +3,17 @@ import Image from "next/image";
 import { Button } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import getRestaurant from "@/libs/getRestaurant";
 
-export default function ReservationCard({info,show}:{info:object,show:boolean}){
+export default async function ReservationCard({info,show}:{info:object,show:boolean}){
+    console.log(info)
     return(
         <div className="bg-gray-50 rounded-xl h-32 flex flex-row gap-x-6 items-center" key={info.bid}>
         <Image src={info.restaurant.picture}
         width={180} height={0} className="h-full rounded-bl-lg rounded-tl-lg" alt="drive image"/>
         <div className="flex flex-col grow gap-y-2 ">
             <div className="text-xl font-semibold">{info.restaurant.name}</div>
-            <div className="text-gray-500">{info.restaurant.address}</div>
+            <div className="text-gray-500">{info.restaurant.address} {info.restaurant.province}</div>
             {show?
                 <div className="text-gray-500">
                     Reserved at {info.createdAt}

@@ -20,7 +20,6 @@ export default async function TopMenu(){
                 justify-end items-center w-[230px]">
                     <TopMenuItem title="Reservation" pageRef="/reservation" style="text-base"/>
                     <TopMenuItem title="Sign out"  pageRef="./api/auth/signout" style="text-base"/>
-                    {session.user?.name}
                 </div>
                 :
                 <div className="flex flex-row gap-x-4 
