@@ -4,7 +4,10 @@ import { use, useState } from "react"
 import { useRouter } from "next/navigation"
 import { useSearchParams } from "next/navigation"
 import { InputLabel } from "@mui/material"
-import createBooking from "@/libs/createBooking"
+import { Fragment } from "react";
+import PopupErrorBooking from "@/components/PopupErrorBooking";
+import { addReservationAction } from "@/action/addReservationAction"
+import { updateReservationAction } from "@/action/updateReservationAction"
 import updateBooking from "@/libs/updateBooking"
 
 export default function ReservationForm({token,action}:{token:string,action:string}){
@@ -15,12 +18,14 @@ export default function ReservationForm({token,action}:{token:string,action:stri
         const guests = urlParams.get('guests')
         const date = urlParams.get('reservedDate')
         
-        const rount = useRouter()
+        const today = new Date().toISOString().split('T')[0]
 
         const [formData, setFormData] = useState({
-                bookingDate: date,
-                numOfGuests: guests
+                bookingDate: !date?today:date.split('T')[0],
+                numOfGuests: !guests?'1':guests
         });
+        
+        const [showError, setShowError] = useState(false)
         
 
         const handleInputChange = (event) => {
@@ -35,22 +40,17 @@ export default function ReservationForm({token,action}:{token:string,action:stri
             switch(action){
             case 'add':{
                 try {   
-                await new Promise((resolve)=>{
-                        const bookingResult = createBooking(formData.bookingDate, Number(formData.numOfGuests), id, token);
-                        setTimeout(resolve,25)})
-                rount.push('./')
+                const bookingResult = await addReservationAction(formData.bookingDate, Number(formData.numOfGuests), id, token);
                 } catch (error) {
-                 console.error('Error submitting form:', error);
+                setShowError(true)
+                console.error('Error submitting form:', error);
                 }
+                
                 break;
             }
             case 'update':{
                 try{
-                await new Promise((resolve)=>{
-                        const bookingResult = updateBooking(formData.bookingDate, Number(formData.numOfGuests), id, token)
-                        setTimeout(resolve,25)
-                })
-                rount.push('./')
+                const updateBookingResult = await updateReservationAction(formData.bookingDate, Number(formData.numOfGuests), id, token)
                 } catch (error) {
                  console.error('Error submitting form:', error);
                 }
@@ -60,13 +60,23 @@ export default function ReservationForm({token,action}:{token:string,action:stri
         };
 
     return(
+    <Fragment>
+        <div className="p-7 gap-4 rounded-3xl bg-white  h-140 w-280">
+        <div className="flex px-0 flex-col items-center gap-y-3 self-stretch ">
+                <h3 className="text-red-700	 text-center font-sans text-4xl	not-italic	font-medium	leading-6	tracking-widest	">Reservation</h3>
+                <h4 className="w-129 text-black text-center font-sans text-base not-italic font-light leading-6 pb-2 text-gray-500">{name}</h4>
+                                
+        </div>
+        <hr className="border-black p-2"/>
         <form action={handleFormSubmit} className="flex flex-col gap-y-3 w-[450px]">
+                                
                                 <div className="flex flex-col gap-y-3">
                                         <InputLabel className="text-lg text-gray-600">Date</InputLabel>
                                         <input type="date" className="px-3 bg-red-50 border rounded-full h-10 w-full text-[#737373] border-black/25" 
                                         required 
                                         id="bookingDate" name="bookingDate"
                                         value={formData.bookingDate}
+                                        min={today}
                                         onChange={handleInputChange}
                                         />
                                 </div>
@@ -88,5 +98,8 @@ export default function ReservationForm({token,action}:{token:string,action:stri
                                         hover:bg-red-800 hover:shadow-md">CONFIRM</button>
                                 </div>
                         </form>
+        </div>
+        <PopupErrorBooking isVisible={showError} onClose={()=>setShowError(false)}/>
+        </Fragment>
     )
 }

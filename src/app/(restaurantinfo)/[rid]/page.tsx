@@ -1,42 +1,23 @@
 import Image from 'next/image'
 import getRestaurant from '@/libs/getRestaurant'
 import getUserProfile from "@/libs/getUserProfile";
-import deleteRestaurant from '@/libs/deleteRestaurant';
-import {  revalidateTag } from "next/cache";
-import { redirect } from 'next/navigation';
 import Link from 'next/link';
-// import { useSession } from 'next-auth/react'
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
-import DeleteButton from '@/components/deleteButton';
-
+import DeleteButton from '@/components/DeleteButton';
 
 export default async function RestaurantDetailPage({params}:{params: {rid:string}}){
     
     const restaurantDetail = await getRestaurant(params.rid)
     const session = await getServerSession(authOptions)
-    
-
-    console.log("render")
-
-    // const deleteResto = async()=>{
-    //     // 'use server'
-    //     console.log('delete')
-    //     if (!session || !session.user) return false
-    //     await deleteRestaurant(params.rid,session.user.token)
-    //     revalidateTag("deleteResto")
-    //     redirect('/')
-    // }
+    // console.log("render")
 
     async function checkAdmin(){
         console.log('admin')
-        // console.log(session.user)
         if (!session || !session.user || !session.user.token) return false
         const profile = await getUserProfile(session.user.token)
         return profile.data.role=='admin'
     }
-
-    
 
     return(
         <div className="bg-gray-200 flex flex-col items-center py-20 h-screen">
@@ -58,10 +39,6 @@ export default async function RestaurantDetailPage({params}:{params: {rid:string
                                 <Link href={`/restaurant/update?id=${params.rid}&name=${restaurantDetail.data.name}&foodtype=${restaurantDetail.data.foodtype}&address=${restaurantDetail.data.address}&province=${restaurantDetail.data.province}&postalcode=${restaurantDetail.data.postalcode}&tel=${restaurantDetail.data.tel}&picture=${restaurantDetail.data.picture}`}>
                                 <button className="flex h-9 px-6 items-center border-red-700 text-red-700 rounded-md font-medium font-sans text-sm border-2 hover:shadow-md hover:bg-red-100">EDIT</button>
                                 </Link>
-
-                                {/* <form action={deleteResto}>
-                                <button type="submit" className="flex h-9 px-6 items-center border-red-700 text-red-700 rounded-md font-medium font-sans text-sm border-2 hover:shadow-md hover:bg-red-100">DELETE</button>
-                                </form> */}
                                 <DeleteButton id={params.rid} token={session?.user.token}/>
                             </>
                         :null
@@ -69,7 +46,6 @@ export default async function RestaurantDetailPage({params}:{params: {rid:string
                 </div>
             </div>
         </div>
-        
     )
 }
 

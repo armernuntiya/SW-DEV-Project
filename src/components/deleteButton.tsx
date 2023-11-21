@@ -1,17 +1,15 @@
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import deleteRestaurant from '@/libs/deleteRestaurant';
-import {  revalidateTag } from "next/cache";
+import {  revalidateTag,revalidatePath } from "next/cache";
 import { redirect } from 'next/navigation';
 
 export default function DeleteButton({ id,token }: {id:string,token:string}){
 
-
     const deleteResto = async()=>{
         'use server'
-        console.log('delete')
+        // console.log('delete')
         await deleteRestaurant(id,token)
         revalidateTag("deleteResto")
+        revalidatePath('/')
         redirect('/')
     }
     return (

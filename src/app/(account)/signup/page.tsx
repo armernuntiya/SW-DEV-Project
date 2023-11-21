@@ -33,11 +33,8 @@ export default function SignUpPage(){
             <div className="flex flex-col py-4 items-center gap-12">
                 <div className="flex flex-col items-center gap-5">
                     <TextField id="outlined-basic" placeholder="Name" variant="outlined" InputProps={{sx: {borderRadius:9999,width:399,fontSize:16, height:40,paddingBottom:2,textAlign:'center',paddingTop:2}}} InputLabelProps={{}} onChange={(e)=>(name.current=e.target.value)}/>
-
                     <TextField id="outlined-password-input" placeholder="Email" variant="outlined" InputProps={{sx: {borderRadius:9999,width:399,fontSize:16, height:40,paddingBottom:2,textAlign:'center',paddingTop:2}}} InputLabelProps={{}} onChange={(e)=>(email.current=e.target.value)}/>
-
                     <TextField id="outlined-password-input" placeholder="Password" variant="outlined" InputProps={{sx: {borderRadius:9999,width:399,fontSize:16, height:40,paddingBottom:2,textAlign:'center',paddingTop:2}}} InputLabelProps={{}} onChange={(e)=>(pass.current=e.target.value)}/>
-
                     <TextField id="outlined-password-input" placeholder="Phone Number" variant="outlined" InputProps={{sx: {borderRadius:9999,width:399,fontSize:16, height:40,paddingBottom:2,textAlign:'center',paddingTop:2}}} InputLabelProps={{}} onChange={(e)=>(tel.current=e.target.value)}/>
                 </div>
                 <div className="flex flex-col items-center gap-2 self-stretch">
@@ -46,11 +43,7 @@ export default function SignUpPage(){
                         <h4 className="w-129 text-gray-700 text-center font-sans text-sm not-italic font-light leading-6">Already have an account?</h4>
                         <Link href='/signin' className="w-129 text-red-700 text-center font-sans text-sm not-italic font-light leading-6">Sign in</Link>
                     </div>
-                    
                 </div>
-                
-                
-
             </div>
         </div>
     </div>

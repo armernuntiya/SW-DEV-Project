@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Button } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import deleteBooking from "@/libs/deleteBooking";
+import { deleteReservationAction } from "@/action/deleteReservationAction";
 import { useRouter } from 'next/navigation';
 
 
@@ -24,8 +24,7 @@ export default function ReservationCard({info,show,token}:{info:object,show:bool
 
     const delectItemBooking = async()=>{
         try {   
-            const result = await deleteBooking(info._id,token)
-            router.refresh()
+            const result = await deleteReservationAction(info._id,token)
         } catch (error) {
             console.error('Error submitting form:', error)
         }
@@ -33,7 +32,7 @@ export default function ReservationCard({info,show,token}:{info:object,show:bool
     }
 
     return(
-        <div className="bg-gray-50 rounded-xl h-32 flex flex-row gap-x-6 items-center" key={info._id}>
+        <div className="bg-gray-50 rounded-xl h-32 flex flex-row gap-x-6 items-center hover:bg-neutral-200" key={info._id}>
         <Image src={info.restaurant.picture}
         width={180} height={0} className="h-full rounded-bl-lg rounded-tl-lg" alt="drive image"/>
         <div className="flex flex-col grow gap-y-2 ">
@@ -52,7 +51,7 @@ export default function ReservationCard({info,show,token}:{info:object,show:bool
             {info.numOfGuests}
         </div>
         <div className="flex flex-col gap-y-3 mr-9">
-        <Link href={`./reservation/update?id=${info._id}&guests=${info.numOfGuests}&reservedDate=${formatDate(info.bookingDate)}`}>
+        <Link href={`./reservation/update?id=${info._id}&guests=${info.numOfGuests}&name=${info.restaurant.name}`}>
                 <Button variant="outlined" startIcon={<EditIcon />} className="text-red-700 border-red-700 w-full hover:bg-red-500/25 hover:border-red-800">Edit</Button>
             </Link>
             <Button variant="outlined" startIcon={<DeleteIcon /> } className="text-red-700 border-red-700 hover:bg-red-500/25 hover:border-red-800" onClick={delectItemBooking}>Delete</Button>

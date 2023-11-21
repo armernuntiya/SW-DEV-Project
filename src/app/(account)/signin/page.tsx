@@ -41,11 +41,7 @@ export default function SignInPage(){
                         <h4 className="w-129 text-gray-700 text-center font-sans text-sm not-italic font-light leading-6">Don't have an account?</h4>
                         <Link href='./signup' className="w-129 text-red-700 text-center font-sans text-sm not-italic font-light leading-6">Sign up</Link>
                     </div>
-                    
                 </div>
-                
-                
-
             </div>
         </div>
     </div>

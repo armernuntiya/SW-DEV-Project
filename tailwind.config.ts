@@ -15,7 +15,7 @@ const config: Config = {
       },
       fontFamily: {
         'pacifico' : ['Pacifico','cursive'],
-        'itim' : ['Itim'],
+        'abeezee' : ['ABeeZee']
       }
     },
   },

@@ -33,7 +33,6 @@ export default async function RestaurantCreatePage(){
         }
 
     return(
-        // action={addRestaurant}
         <form action={addRestaurant}>
         <div className="bg-red-700 flex flex-col items-center pt-24 p-20 h-full ">
            <div className="flex flex-col p-10 justify-center items-center gap-8 rounded-3xl bg-white shadow-md h-140 w-200">
@@ -45,42 +44,34 @@ export default async function RestaurantCreatePage(){
                     <div className="flex items-center gap-16">
                         <div className="flex flex-col items-start gap-3">
                             <h2 className="text-gray-600 font-sans not-serif text-lg font-normal">Name</h2>
-                            {/* <TextField id="outlined-basic" placeholder="Fill the name of the restaurant" variant="outlined" InputProps={{sx: {borderRadius:9999,width:399,fontSize:16, height:40,paddingBottom:2,textAlign:'center',paddingTop:2, background:'#FEF2F2', border:'1 solid #737373'}}} InputLabelProps={{}}  /> */}
-
                             <input className="bg-red-50 border border-gray-400 rounded-full w-[399px] text-base py-2 px-4 text-gray-700 focus:outline-none focus:border-blue-400 focus:border-2" type='text' required id='name' name='name' placeholder="Fill the name of the restaurant"/>
 
                         </div>
                         <div className="flex flex-col items-start gap-3">
                             <h2 className="text-gray-600 font-sans not-serif text-lg font-normal">Food Type</h2>
-                            {/* <TextField   id="outlined-basic" placeholder="Fast Food, Dessert, etc." variant="outlined" InputProps={{sx: {borderRadius:9999,width:399,fontSize:16, height:40,paddingBottom:2,textAlign:'center',paddingTop:2, background:'#FEF2F2', border:'1 solid #737373'}}} InputLabelProps={{}}  /> */}
                             <input className="bg-red-50 border border-gray-400 rounded-full w-[399px] text-base py-2 px-4 text-gray-700 focus:outline-none focus:border-blue-400 focus:border-2" type='text' required id='foodtype' name='foodtype' placeholder="Fast Food, Dessert, etc."/>
                         </div>
                     </div>
                     <div className="flex flex-col items-start gap-3">
                             <h2 className="text-gray-600 font-sans not-serif text-lg font-normal">Address</h2>
-                            {/* <TextField  id="outlined-basic" placeholder="House no, Street, Road ..." variant="outlined" InputProps={{sx: {borderRadius:9999,width:860,fontSize:16, height:40,paddingBottom:2,textAlign:'center',paddingTop:2, background:'#FEF2F2', border:'1 solid #737373'}}} InputLabelProps={{}}  /> */}
                             <input className="bg-red-50 border border-gray-400 rounded-full w-[860px] text-base py-2 px-4 text-gray-700 focus:outline-none focus:border-blue-400 focus:border-2" type='text' required id='address' name='address' placeholder="House no, Street, Road ..."/>
                     </div>
                     <div className="flex items-center gap-16">
                         <div className="flex flex-col items-start gap-3">
                             <h2 className="text-gray-600 font-sans not-serif text-lg font-normal">Province</h2>
-                            {/* <TextField   id="outlined-basic" placeholder="Fill province of the restaurant" variant="outlined" InputProps={{sx: {borderRadius:9999,width:399,fontSize:16, height:40,paddingBottom:2,textAlign:'center',paddingTop:2, background:'#FEF2F2', border:'1 solid #737373'}}} InputLabelProps={{}}  /> */}
                             <input className="bg-red-50 border border-gray-400 rounded-full w-[399px] text-base py-2 px-4 text-gray-700 focus:outline-none focus:border-blue-400 focus:border-2" type='text' required id='province' name='province' placeholder="Fill province of the restaurant"/>
                         </div>
                         <div className="flex flex-col items-start gap-3">
                             <h2 className="text-gray-600 font-sans not-serif text-lg font-normal">Postal code</h2>
-                            {/* <TextField   id="outlined-basic" placeholder="5-digit postal code" variant="outlined" InputProps={{sx: {borderRadius:9999,width:399,fontSize:16, height:40,paddingBottom:2,textAlign:'center',paddingTop:2, background:'#FEF2F2', border:'1 solid #737373'}}} InputLabelProps={{}}  /> */}
                             <input className="bg-red-50 border border-gray-400 rounded-full w-[399px] text-base py-2 px-4 text-gray-700 focus:outline-none focus:border-blue-400 focus:border-2" type='text' required id='postalcode' name='postalcode' placeholder="5-digit postal code"/>
                         </div>
                     </div>
                     <div className="flex flex-col items-start gap-3">
                             <h2 className="text-gray-600 font-sans not-serif text-lg font-normal">Telephone Number</h2>
-                            {/* <TextField   id="outlined-basic" placeholder="xxx-xxx-xxxx" variant="outlined" InputProps={{sx: {borderRadius:9999,width:860,fontSize:16, height:40,paddingBottom:2,textAlign:'center',paddingTop:2, background:'#FEF2F2', border:'1 solid #737373'}}} InputLabelProps={{}}  /> */}
                             <input className="bg-red-50 border border-gray-400 rounded-full w-[860px] text-base py-2 px-4 text-gray-700 focus:outline-none focus:border-blue-400 focus:border-2" type='text' required id='tel' name='tel' placeholder="XXXXXXXXXX"/>
                     </div>
                     <div className="flex flex-col items-start gap-3">
                             <h2 className="text-gray-600 font-sans not-serif text-lg font-normal">Picture URL</h2>
-                            {/* <TextField   id="outlined-basic" placeholder="Fill URL of the picture" variant="outlined" InputProps={{sx: {borderRadius:9999,width:860,fontSize:16, height:40,paddingBottom:2,textAlign:'center',paddingTop:2, background:'#FEF2F2', border:'1 solid #737373'}}} InputLabelProps={{}}  /> */}
                             <input className="bg-red-50 border border-gray-400 rounded-full w-[860px] text-base py-2 px-4 text-gray-700 focus:outline-none focus:border-blue-400 focus:border-2" type='text' required id='picture' name='picture' placeholder="Fill URL of the picture"/>
                     </div>
                 </div>

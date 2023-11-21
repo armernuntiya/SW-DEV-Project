@@ -1,10 +1,8 @@
 'use client'
 
+
 import { useSearchParams } from "next/navigation";
-import updateRestaurant from "@/libs/updateRestaurant";
-import {  revalidateTag,revalidatePath } from "next/cache";
-import {redirect} from 'next/navigation'
-import { useRouter } from "next/navigation"
+import { upDateAction } from "@/action/updateRestaurantAction";
 
 export default function RestaurantForm({token}:{token:string}) {
     
@@ -18,7 +16,7 @@ export default function RestaurantForm({token}:{token:string}) {
     const tel = urlParams.get("tel")
     const picture = urlParams.get("picture")
 
-    const rount = useRouter()
+    // const rount = useRouter()
 
     const updateResto = async(updateRestaurantForm:FormData)=>{
         // 'use server'
@@ -29,12 +27,17 @@ export default function RestaurantForm({token}:{token:string}) {
         const postalcode2 = updateRestaurantForm.get("postalcode")
         const tel2 = updateRestaurantForm.get("tel")
         const picture2 = updateRestaurantForm.get("picture")
-        try {
-            const updateResult = await updateRestaurant(id,token,name2,address2,foodtype2,province2,postalcode2,tel2,picture2)                
-            rount.push('/')    
-        } catch (error) {
-            console.error('Error update restaurant',error);
-        }
+        await upDateAction(id,token,name2,address2,foodtype2,province2,postalcode2,tel2,picture2)
+        
+        // try {
+        //     const updateResult = await updateRestaurant(id,token,name2,address2,foodtype2,province2,postalcode2,tel2,picture2) 
+        //     // revalidateTag('updateResto')
+        //     revalidatePath('/')
+        //     redirect('/')               
+        //     // rount.push('/')    
+        // } catch (error) {
+        //     console.error('Error update restaurant',error);
+        // }
     }
 
 
@@ -50,42 +53,34 @@ export default function RestaurantForm({token}:{token:string}) {
                     <div className="flex items-center gap-16">
                         <div className="flex flex-col items-start gap-3">
                             <h2 className="text-gray-600 font-sans not-serif text-lg font-normal">Name</h2>
-                            {/* <TextField id="outlined-basic" placeholder="Fill the name of the restaurant" variant="outlined" InputProps={{sx: {borderRadius:9999,width:399,fontSize:16, height:40,paddingBottom:2,textAlign:'center',paddingTop:2, background:'#FEF2F2', border:'1 solid #737373'}}} InputLabelProps={{}}  /> */}
-
                             <input  defaultValue={name? name:''} className="bg-red-50 border border-gray-400 rounded-full w-[399px] text-base py-2 px-4 text-gray-700 focus:outline-none focus:border-blue-400 focus:border-2" type='text' required id='name' name='name' placeholder="Fill the name of the restaurant"/>
 
                         </div>
                         <div className="flex flex-col items-start gap-3">
                             <h2 className="text-gray-600 font-sans not-serif text-lg font-normal">Food Type</h2>
-                            {/* <TextField   id="outlined-basic" placeholder="Fast Food, Dessert, etc." variant="outlined" InputProps={{sx: {borderRadius:9999,width:399,fontSize:16, height:40,paddingBottom:2,textAlign:'center',paddingTop:2, background:'#FEF2F2', border:'1 solid #737373'}}} InputLabelProps={{}}  /> */}
                             <input defaultValue={foodtype? foodtype:''} className="bg-red-50 border border-gray-400 rounded-full w-[399px] text-base py-2 px-4 text-gray-700 focus:outline-none focus:border-blue-400 focus:border-2" type='text' required id='foodtype' name='foodtype' placeholder="Fast Food, Dessert, etc."/>
                         </div>
                     </div>
                     <div className="flex flex-col items-start gap-3">
                             <h2 className="text-gray-600 font-sans not-serif text-lg font-normal">Address</h2>
-                            {/* <TextField  id="outlined-basic" placeholder="House no, Street, Road ..." variant="outlined" InputProps={{sx: {borderRadius:9999,width:860,fontSize:16, height:40,paddingBottom:2,textAlign:'center',paddingTop:2, background:'#FEF2F2', border:'1 solid #737373'}}} InputLabelProps={{}}  /> */}
                             <input defaultValue={address? address:''} className="bg-red-50 border border-gray-400 rounded-full w-[860px] text-base py-2 px-4 text-gray-700 focus:outline-none focus:border-blue-400 focus:border-2" type='text' required id='address' name='address' placeholder="House no, Street, Road ..."/>
                     </div>
                     <div className="flex items-center gap-16">
                         <div className="flex flex-col items-start gap-3">
                             <h2 className="text-gray-600 font-sans not-serif text-lg font-normal">Province</h2>
-                            {/* <TextField   id="outlined-basic" placeholder="Fill province of the restaurant" variant="outlined" InputProps={{sx: {borderRadius:9999,width:399,fontSize:16, height:40,paddingBottom:2,textAlign:'center',paddingTop:2, background:'#FEF2F2', border:'1 solid #737373'}}} InputLabelProps={{}}  /> */}
                             <input defaultValue={province? province:''} className="bg-red-50 border border-gray-400 rounded-full w-[399px] text-base py-2 px-4 text-gray-700 focus:outline-none focus:border-blue-400 focus:border-2" type='text' required id='province' name='province' placeholder="Fill province of the restaurant"/>
                         </div>
                         <div className="flex flex-col items-start gap-3">
                             <h2 className="text-gray-600 font-sans not-serif text-lg font-normal">Postal code</h2>
-                            {/* <TextField   id="outlined-basic" placeholder="5-digit postal code" variant="outlined" InputProps={{sx: {borderRadius:9999,width:399,fontSize:16, height:40,paddingBottom:2,textAlign:'center',paddingTop:2, background:'#FEF2F2', border:'1 solid #737373'}}} InputLabelProps={{}}  /> */}
                             <input defaultValue={postalcode? postalcode:''} className="bg-red-50 border border-gray-400 rounded-full w-[399px] text-base py-2 px-4 text-gray-700 focus:outline-none focus:border-blue-400 focus:border-2" type='text' required id='postalcode' name='postalcode' placeholder="5-digit postal code"/>
                         </div>
                     </div>
                     <div className="flex flex-col items-start gap-3">
                             <h2 className="text-gray-600 font-sans not-serif text-lg font-normal">Telephone Number</h2>
-                            {/* <TextField   id="outlined-basic" placeholder="xxx-xxx-xxxx" variant="outlined" InputProps={{sx: {borderRadius:9999,width:860,fontSize:16, height:40,paddingBottom:2,textAlign:'center',paddingTop:2, background:'#FEF2F2', border:'1 solid #737373'}}} InputLabelProps={{}}  /> */}
                             <input defaultValue={tel? tel:''} className="bg-red-50 border border-gray-400 rounded-full w-[860px] text-base py-2 px-4 text-gray-700 focus:outline-none focus:border-blue-400 focus:border-2" type='text' required id='tel' name='tel' placeholder="XXXXXXXXXX"/>
                     </div>
                     <div className="flex flex-col items-start gap-3">
                             <h2 className="text-gray-600 font-sans not-serif text-lg font-normal">Picture URL</h2>
-                            {/* <TextField   id="outlined-basic" placeholder="Fill URL of the picture" variant="outlined" InputProps={{sx: {borderRadius:9999,width:860,fontSize:16, height:40,paddingBottom:2,textAlign:'center',paddingTop:2, background:'#FEF2F2', border:'1 solid #737373'}}} InputLabelProps={{}}  /> */}
                             <input defaultValue={picture? picture:''} className="bg-red-50 border border-gray-400 rounded-full w-[860px] text-base py-2 px-4 text-gray-700 focus:outline-none focus:border-blue-400 focus:border-2" type='text' required id='picture' name='picture' placeholder="Fill URL of the picture"/>
                     </div>
                 </div>
@@ -93,9 +88,10 @@ export default function RestaurantForm({token}:{token:string}) {
                     <button type="submit" className="flex h-9 px-6 items-center bg-red-700 text-white rounded-full 
                     font-normal font-sans text-sm tracking-widest
                     hover:bg-red-800 hover:shadow-md">CONFIRM</button>  
-            </div>
+                </div>
             </div> 
         </div>
         </form>
+        
     )
 }

@@ -20,7 +20,7 @@ export default async function RestaurantPanel({restaurantJson}:{restaurantJson:O
     
 
     return (
-        <div className="inline-flex p-4 flex-col items-center gap-4 rounded-2xl bg-white">
+        <div className="inline-flex p-4 flex-col items-center content-center gap-4 rounded-2xl bg-white">
             <div className="flex px-4 justify-between items-center self-stretch">
                 <div className="flex flex-col items-start gap-1">
                     <h1 className="text-black font-sans not-serif text-3xl font-semibold tracking-wide">Recommend restaurants</h1>
@@ -34,12 +34,12 @@ export default async function RestaurantPanel({restaurantJson}:{restaurantJson:O
                     : null
                 }
             </div>
-            <div className="flex w-[1110px] p-2 justify-center items-start content-start gap-y-6 gap-x-12 flex-wrap">
+            <div className="flex w-[1110px] px-0 py-2 justify-center items-start content-start gap-y-6 gap-x-12 flex-wrap mr-6">
                 {
                     restaurantJsonReady.data.map((restaurantItem:Object) => (
-                        <Link href={`/${restaurantItem.id}`} className="w-1/5">
+                        <Link key={restaurantItem.id} href={`/${restaurantItem.id}`} className="w-1/5">
                         
-                        <RestaurantCard name={restaurantItem.name} Province={restaurantItem.province} foodType={restaurantItem.foodtype} imgSrc={restaurantItem.picture}
+                        <RestaurantCard key={restaurantItem.id} name={restaurantItem.name} Province={restaurantItem.province} foodType={restaurantItem.foodtype} imgSrc={restaurantItem.picture}
                         />
                         
                         </Link>
