@@ -6,13 +6,10 @@ import { Button } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { deleteReservationAction } from "@/action/deleteReservationAction";
-import { useRouter } from 'next/navigation';
 
 
 export default function ReservationCard({info,show,token}:{info:object,show:boolean,token:string}){
     
-    const router = useRouter();
-
     const formatDate = (date:string)=>{
         const inputDate = new Date(date)
         const day = String(inputDate.getDate()).padStart(2, '0')
