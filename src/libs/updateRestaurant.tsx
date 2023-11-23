@@ -19,7 +19,6 @@ export default async function updateRestaurant(id:string,token:string,name:strin
     if (!response.ok) {
         const errorData = await response.json(); // Try to parse response body as JSON
         const errorMessage = errorData?.message || "Failed to update booking"; // Use a default message if the response body doesn't contain a message
-        console.log(token)
         throw new Error(errorMessage);
     }
     return await response.json()
