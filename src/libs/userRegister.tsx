@@ -15,7 +15,9 @@ export default async function userRegister(userName:string, userEmail:string, us
     })
     
     if(!response.ok){
-        throw new Error("Failed to register")
+        const errorData = await response.json(); // Try to parse response body as JSON
+        const errorMessage = errorData?.message || "Failed to register"; // Use a default message if the response body doesn't contain a message
+        throw new Error(errorMessage);
     }
 
     return await response.json()

@@ -1,38 +1,68 @@
+'use client'
+import { addAestaurantaction } from "@/action/addRestaurantAction";
+import PopupError from "@/components/PopupError";
 import { dbConnect } from "@/db/dbConnect";
 import Restaurant from "@/db/models/Restaurant";
 import {  revalidateTag } from "next/cache";
 import {redirect} from 'next/navigation'
+import { Fragment, useRef, useState } from "react";
 
-export default async function RestaurantCreatePage(){
+export default function RestaurantCreatePage(){
+
+    
+    const message = useRef("")
+    const [showError, setShowError] = useState(false)
+    
+    function isValidTel(tel: string): boolean {
+        const telPattern = /^\(?\d{10}$/
+        return telPattern.test(tel);
+    }
+
+    function isValidPostalCode(postalCode: string): boolean {
+        const postalCodePattern = /^\(?\d{5}$/
+        return postalCodePattern.test(postalCode);
+    }
+
+    function isValidUrl(url: string): boolean {
+        const urlPattern = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(:\d{1,5})?(\/[^\s]*)?$/;
+        return urlPattern.test(url);
+      }
 
         const addRestaurant = async (addRestaurantForm:FormData) => {
-                'use server'
-                const name = addRestaurantForm.get("name")
-                const foodType = addRestaurantForm.get("foodtype")
-                const address = addRestaurantForm.get("address")
-                const province = addRestaurantForm.get("province")
-                const postalCode = addRestaurantForm.get("postalcode")
-                const tel = addRestaurantForm.get("tel")
-                const picture = addRestaurantForm.get("picture")
-                try{
-                        await dbConnect()
-                        const restaurant = await Restaurant.create({
-                                "name":name,
-                                "foodtype":foodType,
-                                "address":address,
-                                "province":province,
-                                "postalcode":postalCode,
-                                "tel":tel,
-                                "picture":picture
-                        })
-                } catch(error) {
-                        console.log(error)
-                }
-                revalidateTag("restaurants")
-                redirect("/")
+            
+            const name = addRestaurantForm.get("name")
+            const foodType = addRestaurantForm.get("foodtype")
+            const address = addRestaurantForm.get("address")
+            const province = addRestaurantForm.get("province")
+            const postalCode = addRestaurantForm.get("postalcode")
+            const tel = addRestaurantForm.get("tel")
+            const picture = addRestaurantForm.get("picture")
+                
+            const inValidForm: string[]=[]
+            
+            if(!isValidTel(tel)){
+                inValidForm.push("Your telephone number must have 10 digit.")
+            }  
+            
+            if(!isValidPostalCode(postalCode)){
+                inValidForm.push("Your postal code must have 5 digit.")
+            }
+
+            if(!isValidUrl(picture)){
+                inValidForm.push("PictureUrl is not in the correct format.")
+            }
+
+            if(inValidForm.length){
+                message.current = inValidForm.join(' ')
+                setShowError(true)
+            }
+            else{
+            await addAestaurantaction(name,foodType,address,province,postalCode,tel,picture)}
+                
         }
 
     return(
+        <Fragment>
         <form action={addRestaurant}>
         <div className="bg-red-700 flex flex-col items-center pt-24 p-20 h-full ">
            <div className="flex flex-col p-10 justify-center items-center gap-8 rounded-3xl bg-white shadow-md h-140 w-200">
@@ -68,7 +98,7 @@ export default async function RestaurantCreatePage(){
                     </div>
                     <div className="flex flex-col items-start gap-3">
                             <h2 className="text-gray-600 font-sans not-serif text-lg font-normal">Telephone Number</h2>
-                            <input className="bg-red-50 border border-gray-400 rounded-full w-[860px] text-base py-2 px-4 text-gray-700 focus:outline-none focus:border-blue-400 focus:border-2" type='text' required id='tel' name='tel' placeholder="XXXXXXXXXX"/>
+                            <input className="bg-red-50 border border-gray-400 rounded-full w-[860px] text-base py-2 px-4 text-gray-700 focus:outline-none focus:border-blue-400 focus:border-2" type='text' required id='tel' name='tel' placeholder="10-digit telephone number"/>
                     </div>
                     <div className="flex flex-col items-start gap-3">
                             <h2 className="text-gray-600 font-sans not-serif text-lg font-normal">Picture URL</h2>
@@ -83,5 +113,7 @@ export default async function RestaurantCreatePage(){
             </div> 
         </div>
         </form>
+        <PopupError isVisible={showError} onClose={()=>setShowError(false)} header="Invalid input" body={message.current} />
+        </Fragment>
     )
 }
