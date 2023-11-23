@@ -33,8 +33,8 @@ export default function SignUpPage(){
             <div className="flex flex-col py-4 items-center gap-12">
                 <div className="flex flex-col items-center gap-5">
                     <TextField id="outlined-basic" placeholder="Name" variant="outlined" InputProps={{sx: {borderRadius:9999,width:399,fontSize:16, height:40,paddingBottom:2,textAlign:'center',paddingTop:2}}} InputLabelProps={{}} onChange={(e)=>(name.current=e.target.value)}/>
-                    <TextField id="outlined-password-input" placeholder="Email" variant="outlined" InputProps={{sx: {borderRadius:9999,width:399,fontSize:16, height:40,paddingBottom:2,textAlign:'center',paddingTop:2}}} InputLabelProps={{}} onChange={(e)=>(email.current=e.target.value)}/>
-                    <TextField id="outlined-password-input" placeholder="Password" variant="outlined" InputProps={{sx: {borderRadius:9999,width:399,fontSize:16, height:40,paddingBottom:2,textAlign:'center',paddingTop:2}}} InputLabelProps={{}} onChange={(e)=>(pass.current=e.target.value)}/>
+                    <TextField id="outlined-password-input" type='email' placeholder="Email" variant="outlined" InputProps={{sx: {borderRadius:9999,width:399,fontSize:16, height:40,paddingBottom:2,textAlign:'center',paddingTop:2}}} InputLabelProps={{}} onChange={(e)=>(email.current=e.target.value)}/>
+                    <TextField id="outlined-password-input" type='password' placeholder="Password" variant="outlined" InputProps={{sx: {borderRadius:9999,width:399,fontSize:16, height:40,paddingBottom:2,textAlign:'center',paddingTop:2}}} InputLabelProps={{}} onChange={(e)=>(pass.current=e.target.value)}/>
                     <TextField id="outlined-password-input" placeholder="Phone Number" variant="outlined" InputProps={{sx: {borderRadius:9999,width:399,fontSize:16, height:40,paddingBottom:2,textAlign:'center',paddingTop:2}}} InputLabelProps={{}} onChange={(e)=>(tel.current=e.target.value)}/>
                 </div>
                 <div className="flex flex-col items-center gap-2 self-stretch">
