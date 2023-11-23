@@ -20,7 +20,7 @@ export default async function RestaurantDetailPage({params}:{params: {rid:string
     }
 
     return(
-        <div className="bg-gray-200 flex flex-col items-center py-20 h-screen">
+        <div className="bg-gray-200 flex flex-col items-center py-20 min-h-screen">
             <div className="flex flex-col w-180 p-4 items-center gap-2 rounded-2xl bg-white shadow-md">
                 <Image src={(restaurantDetail.data.picture)} alt='Restaurant Image' width={500} height={0} className='rounded h-76  object-fit'/>
                 <div className='flex flex-col px-4 items-start gap-2 self-stretch'>
