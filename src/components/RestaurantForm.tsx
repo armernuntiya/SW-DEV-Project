@@ -3,6 +3,8 @@
 
 import { useSearchParams } from "next/navigation";
 import { upDateAction } from "@/action/updateRestaurantAction";
+import { Fragment, useRef, useState } from "react";
+import PopupError from "./PopupError";
 
 export default function RestaurantForm({token}:{token:string}) {
     
@@ -17,6 +19,24 @@ export default function RestaurantForm({token}:{token:string}) {
     const picture = urlParams.get("picture")
 
     // const rount = useRouter()
+    
+    const message = useRef("")
+    const [showError, setShowError] = useState(false)
+    
+    function isValidTel(tel: string): boolean {
+        const telPattern = /^\(?\d{10}$/
+        return telPattern.test(tel);
+    }
+
+    function isValidPostalCode(postalCode: string): boolean {
+        const postalCodePattern = /^\(?\d{5}$/
+        return postalCodePattern.test(postalCode);
+    }
+
+    function isValidUrl(url: string): boolean {
+        const urlPattern = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(:\d{1,5})?(\/[^\s]*)?$/;
+        return urlPattern.test(url);
+      }
 
     const updateResto = async(updateRestaurantForm:FormData)=>{
         // 'use server'
@@ -27,8 +47,28 @@ export default function RestaurantForm({token}:{token:string}) {
         const postalcode2 = updateRestaurantForm.get("postalcode")
         const tel2 = updateRestaurantForm.get("tel")
         const picture2 = updateRestaurantForm.get("picture")
-        await upDateAction(id,token,name2,address2,foodtype2,province2,postalcode2,tel2,picture2)
+        const inValidForm: string[]=[]
+            
+        if(!isValidTel(tel2)){
+            inValidForm.push("Your telephone number must have 10 digit.")
+        }  
         
+        if(!isValidPostalCode(postalcode2)){
+            inValidForm.push("Your postal code must have 5 digit.")
+        }
+
+        if(!isValidUrl(picture2)){
+            inValidForm.push("PictureUrl is not in the correct format.")
+        }
+
+        if(inValidForm.length){
+            message.current = inValidForm.join(' ')
+            setShowError(true)
+        }
+        else{
+            await upDateAction(id,token,name2,address2,foodtype2,province2,postalcode2,tel2,picture2)
+        }
+
         // try {
         //     const updateResult = await updateRestaurant(id,token,name2,address2,foodtype2,province2,postalcode2,tel2,picture2) 
         //     // revalidateTag('updateResto')
@@ -42,6 +82,7 @@ export default function RestaurantForm({token}:{token:string}) {
 
 
     return (
+        <Fragment>
         <form action={updateResto}>
         <div className="bg-red-700 flex flex-col items-center pt-24 p-20 h-full ">
            <div className="flex flex-col p-10 justify-center items-center gap-8 rounded-3xl bg-white shadow-md h-140 w-200">
@@ -92,6 +133,7 @@ export default function RestaurantForm({token}:{token:string}) {
             </div> 
         </div>
         </form>
-        
+        <PopupError isVisible={showError} onClose={()=>setShowError(false)} header="Invalid input" body={message.current} />
+        </Fragment>
     )
 }
